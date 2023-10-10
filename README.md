@@ -1,22 +1,17 @@
-## Data Set
+# Overview
 
-We are going to use the [ILSVRC 2012 dataset](http://www.image-net.org/challenges/LSVRC/2012/), also known as the 'ImageNet 2012 dataset'.
-The data size is dreadfully large (138G!), but this amount of large-sized dataset is required for successful training of NN.
+This git repo consists of code for experimenting with various CNN architectures to analyze representations from different learning rules.
 
+## Dataset
 
-After downloading the dataset file (i.e., `ILSVRC2012_img_train.tar`), use `extract_imagenet.sh` to extract the entire dataset. 
-
-```bash
-extract_imagenet.sh
-```
-
+We are using the [ILSVRC 2012 dataset](http://www.image-net.org/challenges/LSVRC/2012/), also known as the 'ImageNet 2012 dataset'.
+The data size is dreadfully large (138G!), but this amount of dataset is required for successful training of NN.
 
 ### Training images
 
 There is a tar file for each synset, named by its WNID. The image files are named 
 as x_y.JPEG, where x is WNID of the synset and y is an integer (not fixed width and not
-necessarily consecutive). All images are in JPEG format. 
-
+necessarily consecutive). All images are in JPEG format.
 
 There are a total of 1281167 images for training. The number of images for each 
 synset ranges from 732 to 1300
