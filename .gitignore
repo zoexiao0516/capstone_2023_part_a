@@ -1,3 +1,6 @@
 data/.DS_Store
 .DS_Store
 data/.ipynb_checkpoints/load_imagenet-checkpoint.ipynb
+data/ILSVRC2012_img_train.tar
+data/meta.bin
+data/train

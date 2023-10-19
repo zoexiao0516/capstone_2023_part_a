@@ -3,14 +3,6 @@
 We are going to use the [ILSVRC 2012 dataset](http://www.image-net.org/challenges/LSVRC/2012/), also known as the 'ImageNet 2012 dataset'.
 The data size is dreadfully large (138G!), but this amount of large-sized dataset is required for successful training of NN.
 
-
-After downloading the dataset file (i.e., `ILSVRC2012_img_train.tar`), use `extract_imagenet.sh` to extract the entire dataset. 
-
-```bash
-extract_imagenet.sh
-```
-
-
 ### Training images
 
 There is a tar file for each synset, named by its WNID. The image files are named 
