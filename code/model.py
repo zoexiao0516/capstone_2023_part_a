@@ -16,14 +16,14 @@ MOMENTUM = 0.9
 LR_DECAY = 0.0005
 LR_INIT = 0.01
 IMAGE_DIM = 227
-NUM_CLASSES = 50 # Should be 1000 on the whole
-DEVICE_IDS = [0, 1, 2, 3]
+NUM_CLASSES = 1000 # Should be 1000 on the whole
+# DEVICE_IDS = [0, 1, 2, 3]
 
 
 # /vast/work/public/ml-datasets/imagenet
-INPUT_ROOT_DIR = '/scratch/work/public/imagenet/'
-TRAIN_IMG_DIR = '/scratch/work/public/imagenet/imagenet-train.sqf'
-OUTPUT_DIR = '/scratch/yx1750/capstone2023/'
+INPUT_ROOT_DIR = '/mnt/home/cchou/ceph/Data/imagenet/ILSVRC/Data/CLS-LOC'
+TRAIN_IMG_DIR = '/mnt/home/cchou/ceph/Data/imagenet/ILSVRC/Data/CLS-LOC/train'
+OUTPUT_DIR = '/mnt/home/cchou/ceph/Capstone/'
 LOG_DIR = OUTPUT_DIR + '/tblogs'
 CHECKPOINT_DIR = OUTPUT_DIR + '/models'
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
@@ -86,7 +86,7 @@ if __name__ == '__main__':
 
     alexnet = AlexNet(num_classes=NUM_CLASSES).to(device)
 
-    alexnet = torch.nn.parallel.DataParallel(alexnet, device_ids=DEVICE_IDS)
+    alexnet = torch.nn.parallel.DataParallel(alexnet) #, device_ids=DEVICE_IDS)
     print(alexnet)
     print('AlexNet created')
 

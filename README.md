@@ -4,7 +4,7 @@ This git repo consists of code for experimenting with various CNN architectures 
 
 Env Set-up
 ```
-conda create -n capstone_2023 python=3.8
+conda create -n capstone_2023 python=3.10
 conda activate capstone_2023
 pip install -r requirements.txt
 ```
