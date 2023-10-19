@@ -2,6 +2,12 @@
 
 This git repo consists of code for experimenting with various CNN architectures to analyze representations from different learning rules.
 
+Env Set-up
+```
+conda create -n capstone_2023 python=3.8
+conda activate capstone_2023
+pip install -r requirements.txt
+```
 ## Dataset
 
 We are using the [ILSVRC 2012 dataset](http://www.image-net.org/challenges/LSVRC/2012/), also known as the 'ImageNet 2012 dataset'.
