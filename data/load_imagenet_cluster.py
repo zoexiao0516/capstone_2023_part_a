@@ -46,7 +46,7 @@ def getId(labels):
 random50_id = getId(random50)
 
 # Set the data directory
-data_dir = '/scratch/work/public/imagenet'
+data_dir = '/mnt/home/cchou/ceph/Data/imagenet/ILSVRC/Data/CLS-LOC/'
 
 # Define data transforms for preprocessing (adjust as needed)
 data_transform = transforms.Compose([
@@ -57,17 +57,12 @@ data_transform = transforms.Compose([
 ds = ImageNet(root=data_dir, split='train', transform=data_transform)
 
 # Define the directory where you want to create your custom subset
-custom_subset_root = '/scratch/capstone2023/data/custom_subset'
+custom_subset_root = '/mnt/home/cchou/ceph/Data/imagenet_subset_50_500'
 
-# Create a list of the 5 selected class names
-selected_classes = ['n02504458',
- 'n02256656',
- 'n02951358',
- 'n03832673',
- 'n02109525']
+selected_classes = random50_id
 
-# Define the number of images to keep (in this case, 5)
-num_images_to_keep = 5
+# Define the number of images to keep (in this case, 500)
+num_images_to_keep = 500
 
 # Create the custom subset directory structure and get the first 5 images
 for class_name in selected_classes:
