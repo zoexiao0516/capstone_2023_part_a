@@ -8,7 +8,7 @@ from torch.utils.data import DataLoader
 import shutil
 
 # Load the class index file
-with open('/scratch/yx1750/capstone2023/data/imagenet_class_index.json', 'r') as f:
+with open('/mnt/home/cchou/Documents/Research/Learning rule/Capstone/capstone_2023_part_a/data/imagenet_class_index.json', 'r') as f:
     class_idx = json.load(f)
 
 # Creat a dict mapping WNID to class label
