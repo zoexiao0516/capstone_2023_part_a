@@ -1,0 +1,256 @@
+(capstone_2023) [cchou@workergpu089 code]$ python3 model.py
+cuda
+AlexNet(
+  (conv1): Sequential(
+    (0): Conv2d(3, 64, kernel_size=(11, 11), stride=(2, 2), padding=(5, 5))
+    (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (conv2): Sequential(
+    (0): Conv2d(64, 128, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3))
+    (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (conv3): Sequential(
+    (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU()
+    (3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (conv4): Sequential(
+    (0): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1))
+    (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (classifier): Sequential(
+    (0): Linear(in_features=12800, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=50, bias=True)
+  )
+  (softmax_final): Softmax(dim=-1)
+)
+AlexNet created
+Dataset created
+Dataloader created
+Optimizer created
+Starting training...
+Epoch 0 Average loss 3.832960834208223 Time taken per epoch 32.726534366607666
+Accuracy tensor(0.1836, device='cuda:0')
+Epoch 1 Average loss 3.7663359568291104 Time taken per epoch 32.03035879135132
+Accuracy tensor(0.2227, device='cuda:0')
+Epoch 2 Average loss 3.7207876333256356 Time taken per epoch 31.121347904205322
+Accuracy tensor(0.2188, device='cuda:0')
+Epoch 3 Average loss 3.681165483809009 Time taken per epoch 31.221477508544922
+Accuracy tensor(0.2969, device='cuda:0')
+Epoch 4 Average loss 3.6531282528159545 Time taken per epoch 30.01287865638733
+Accuracy tensor(0.3008, device='cuda:0')
+Epoch 5 Average loss 3.6295019818335463 Time taken per epoch 31.007251501083374
+Accuracy tensor(0.3203, device='cuda:0')
+Epoch 6 Average loss 3.609089858753165 Time taken per epoch 30.663156986236572
+Accuracy tensor(0.3320, device='cuda:0')
+Epoch 7 Average loss 3.5849252189557577 Time taken per epoch 30.72789716720581
+Accuracy tensor(0.3828, device='cuda:0')
+Epoch 8 Average loss 3.5631359065930868 Time taken per epoch 31.857470273971558
+Accuracy tensor(0.3594, device='cuda:0')
+Epoch 9 Average loss 3.5413294280927206 Time taken per epoch 32.09745383262634
+Accuracy tensor(0.3984, device='cuda:0')
+Epoch 10 Average loss 3.5264567149054145 Time taken per epoch 31.14062809944153
+Accuracy tensor(0.3828, device='cuda:0')
+Epoch 11 Average loss 3.5046540461864666 Time taken per epoch 31.018314123153687
+Accuracy tensor(0.5000, device='cuda:0')
+Epoch 12 Average loss 3.486899184197495 Time taken per epoch 32.08209204673767
+Accuracy tensor(0.4766, device='cuda:0')
+Epoch 13 Average loss 3.464853569404366 Time taken per epoch 31.24603033065796
+Accuracy tensor(0.4805, device='cuda:0')
+Epoch 14 Average loss 3.4424416355251037 Time taken per epoch 30.50699782371521
+Accuracy tensor(0.5391, device='cuda:0')
+Epoch 15 Average loss 3.42469496333722 Time taken per epoch 31.722673177719116
+Accuracy tensor(0.5625, device='cuda:0')
+Epoch 16 Average loss 3.4109409101230583 Time taken per epoch 32.02161622047424
+Accuracy tensor(0.5352, device='cuda:0')
+Epoch 17 Average loss 3.394719728489512 Time taken per epoch 30.194229125976562
+Accuracy tensor(0.5703, device='cuda:0')
+Epoch 18 Average loss 3.3821338427435492 Time taken per epoch 30.70980715751648
+Accuracy tensor(0.5273, device='cuda:0')
+Epoch 19 Average loss 3.371082180554105 Time taken per epoch 30.60588049888611
+Accuracy tensor(0.6367, device='cuda:0')
+Epoch 20 Average loss 3.3609545058810832 Time taken per epoch 31.629849910736084
+Accuracy tensor(0.6680, device='cuda:0')
+Epoch 21 Average loss 3.350185249269623 Time taken per epoch 31.64203381538391
+Accuracy tensor(0.6172, device='cuda:0')
+Epoch 22 Average loss 3.3377371375093756 Time taken per epoch 30.701842308044434
+Accuracy tensor(0.6250, device='cuda:0')
+Epoch 23 Average loss 3.326680581594251 Time taken per epoch 31.39284634590149
+Accuracy tensor(0.6328, device='cuda:0')
+Epoch 24 Average loss 3.3181844716219557 Time taken per epoch 32.036128282547
+Accuracy tensor(0.6719, device='cuda:0')
+Epoch 25 Average loss 3.310498933202213 Time taken per epoch 31.029389142990112
+Accuracy tensor(0.6172, device='cuda:0')
+Epoch 26 Average loss 3.3048218206032036 Time taken per epoch 31.38621735572815
+Accuracy tensor(0.6484, device='cuda:0')
+Epoch 27 Average loss 3.297165578173608 Time taken per epoch 30.558573246002197
+Accuracy tensor(0.6484, device='cuda:0')
+Epoch 28 Average loss 3.2890610989836073 Time taken per epoch 31.58983564376831
+Accuracy tensor(0.7031, device='cuda:0')
+Epoch 29 Average loss 3.2735909186687664 Time taken per epoch 31.588874340057373
+Accuracy tensor(0.6602, device='cuda:0')
+Epoch 30 Average loss 3.2590930511042013 Time taken per epoch 31.94074773788452
+Accuracy tensor(0.7031, device='cuda:0')
+Epoch 31 Average loss 3.2525334677745388 Time taken per epoch 31.583861589431763
+Accuracy tensor(0.7109, device='cuda:0')
+Epoch 32 Average loss 3.2424007396108094 Time taken per epoch 32.775935888290405
+Accuracy tensor(0.7266, device='cuda:0')
+Epoch 33 Average loss 3.236851906039051 Time taken per epoch 32.10434007644653
+Accuracy tensor(0.6914, device='cuda:0')
+Epoch 34 Average loss 3.228266502164074 Time taken per epoch 30.37470841407776
+Accuracy tensor(0.7070, device='cuda:0')
+Epoch 35 Average loss 3.221408698976654 Time taken per epoch 31.465543746948242
+Accuracy tensor(0.7070, device='cuda:0')
+Epoch 36 Average loss 3.2143780472352335 Time taken per epoch 31.517571926116943
+Accuracy tensor(0.7578, device='cuda:0')
+Epoch 37 Average loss 3.2098167335864196 Time taken per epoch 30.8972487449646
+Accuracy tensor(0.7461, device='cuda:0')
+Epoch 38 Average loss 3.197483338031572 Time taken per epoch 30.422980070114136
+Accuracy tensor(0.7188, device='cuda:0')
+Epoch 39 Average loss 3.190108967810562 Time taken per epoch 30.26050305366516
+Accuracy tensor(0.7578, device='cuda:0')
+Epoch 40 Average loss 3.1793845977979838 Time taken per epoch 31.81899333000183
+Accuracy tensor(0.7734, device='cuda:0')
+Epoch 41 Average loss 3.1726602377350797 Time taken per epoch 31.10731029510498
+Accuracy tensor(0.7539, device='cuda:0')
+Epoch 42 Average loss 3.1657169405947028 Time taken per epoch 31.758479833602905
+Accuracy tensor(0.7773, device='cuda:0')
+Epoch 43 Average loss 3.162000176832848 Time taken per epoch 31.151711225509644
+Accuracy tensor(0.7891, device='cuda:0')
+Epoch 44 Average loss 3.157686216315043 Time taken per epoch 31.884660720825195
+Accuracy tensor(0.8047, device='cuda:0')
+Epoch 45 Average loss 3.1531505043973627 Time taken per epoch 31.57336163520813
+Accuracy tensor(0.8047, device='cuda:0')
+Epoch 46 Average loss 3.1476832124375806 Time taken per epoch 30.900453329086304
+Accuracy tensor(0.7578, device='cuda:0')
+Epoch 47 Average loss 3.135770569142607 Time taken per epoch 31.183677196502686
+Accuracy tensor(0.8750, device='cuda:0')
+Epoch 48 Average loss 3.1254492961254314 Time taken per epoch 31.1943998336792
+Accuracy tensor(0.8125, device='cuda:0')
+Epoch 49 Average loss 3.1147152443522033 Time taken per epoch 31.49627447128296
+Accuracy tensor(0.8203, device='cuda:0')
+Epoch 50 Average loss 3.1071369672558973 Time taken per epoch 32.086568117141724
+Accuracy tensor(0.8594, device='cuda:0')
+Epoch 51 Average loss 3.1010664984122993 Time taken per epoch 31.22039270401001
+Accuracy tensor(0.8398, device='cuda:0')
+Epoch 52 Average loss 3.097011251547902 Time taken per epoch 31.94866371154785
+Accuracy tensor(0.8867, device='cuda:0')
+Epoch 53 Average loss 3.0939325917627394 Time taken per epoch 30.84291696548462
+Accuracy tensor(0.9023, device='cuda:0')
+Epoch 54 Average loss 3.0919818460326836 Time taken per epoch 31.746292114257812
+Accuracy tensor(0.8516, device='cuda:0')
+Epoch 55 Average loss 3.0907191861536085 Time taken per epoch 32.29092359542847
+Accuracy tensor(0.8594, device='cuda:0')
+Epoch 56 Average loss 3.0881495893616036 Time taken per epoch 31.48620629310608
+Accuracy tensor(0.8633, device='cuda:0')
+Epoch 57 Average loss 3.0865506904641378 Time taken per epoch 30.52050757408142
+Accuracy tensor(0.8516, device='cuda:0')
+Epoch 58 Average loss 3.0843088282752285 Time taken per epoch 31.552148818969727
+Accuracy tensor(0.8633, device='cuda:0')
+Epoch 59 Average loss 3.083488223478966 Time taken per epoch 31.878710746765137
+Accuracy tensor(0.8867, device='cuda:0')
+Epoch 60 Average loss 3.0819857145093152 Time taken per epoch 31.668309211730957
+Accuracy tensor(0.8438, device='cuda:0')
+Epoch 61 Average loss 3.0812772008561597 Time taken per epoch 30.472765922546387
+Accuracy tensor(0.8516, device='cuda:0')
+Epoch 62 Average loss 3.082440226348405 Time taken per epoch 31.42559242248535
+Accuracy tensor(0.8750, device='cuda:0')
+Epoch 63 Average loss 3.0838571356743882 Time taken per epoch 31.367626667022705
+Accuracy tensor(0.8750, device='cuda:0')
+Epoch 64 Average loss 3.0794032775249676 Time taken per epoch 30.352698802947998
+Accuracy tensor(0.8594, device='cuda:0')
+Epoch 65 Average loss 3.070918341272885 Time taken per epoch 30.99049162864685
+Accuracy tensor(0.8789, device='cuda:0')
+Epoch 66 Average loss 3.0655020315622545 Time taken per epoch 32.08540201187134
+Accuracy tensor(0.8789, device='cuda:0')
+Epoch 67 Average loss 3.0611695260116734 Time taken per epoch 31.436986923217773
+Accuracy tensor(0.8477, device='cuda:0')
+Epoch 68 Average loss 3.0605012411923753 Time taken per epoch 32.02688765525818
+Accuracy tensor(0.8828, device='cuda:0')
+Epoch 69 Average loss 3.0581901343827393 Time taken per epoch 31.6991708278656
+Accuracy tensor(0.8906, device='cuda:0')
+Epoch 70 Average loss 3.057612102056287 Time taken per epoch 32.029380798339844
+Accuracy tensor(0.8945, device='cuda:0')
+Epoch 71 Average loss 3.056962716210749 Time taken per epoch 31.33485174179077
+Accuracy tensor(0.8984, device='cuda:0')
+Epoch 72 Average loss 3.0565406735410394 Time taken per epoch 31.00983428955078
+Accuracy tensor(0.8984, device='cuda:0')
+Epoch 73 Average loss 3.0556496639841613 Time taken per epoch 30.527464389801025
+Accuracy tensor(0.8750, device='cuda:0')
+Epoch 74 Average loss 3.054598827951962 Time taken per epoch 31.810340642929077
+Accuracy tensor(0.9180, device='cuda:0')
+Epoch 75 Average loss 3.054447722189205 Time taken per epoch 31.22468066215515
+Accuracy tensor(0.8750, device='cuda:0')
+Epoch 76 Average loss 3.053812388292293 Time taken per epoch 31.228618144989014
+Accuracy tensor(0.9062, device='cuda:0')
+Epoch 77 Average loss 3.0522992930461452 Time taken per epoch 30.772239685058594
+Accuracy tensor(0.8945, device='cuda:0')
+Epoch 78 Average loss 3.0521588399238193 Time taken per epoch 30.766902685165405
+Accuracy tensor(0.9219, device='cuda:0')
+Epoch 79 Average loss 3.052533707667872 Time taken per epoch 30.962335348129272
+Accuracy tensor(0.8867, device='cuda:0')
+Epoch 80 Average loss 3.050645604576032 Time taken per epoch 30.304869413375854
+Accuracy tensor(0.8984, device='cuda:0')
+Epoch 81 Average loss 3.050851023074278 Time taken per epoch 31.260947942733765
+Accuracy tensor(0.8906, device='cuda:0')
+Epoch 82 Average loss 3.054147636767515 Time taken per epoch 30.912663459777832
+Accuracy tensor(0.8711, device='cuda:0')
+Epoch 83 Average loss 3.0581371095991625 Time taken per epoch 31.612512350082397
+Accuracy tensor(0.9062, device='cuda:0')
+Epoch 84 Average loss 3.061763559420084 Time taken per epoch 30.855404138565063
+Accuracy tensor(0.9180, device='cuda:0')
+Epoch 85 Average loss 3.058195042855961 Time taken per epoch 31.338711500167847
+Accuracy tensor(0.9102, device='cuda:0')
+Epoch 86 Average loss 3.0525630995170356 Time taken per epoch 31.15701723098755
+Accuracy tensor(0.9023, device='cuda:0')
+Epoch 87 Average loss 3.048858517224027 Time taken per epoch 30.516831398010254
+Accuracy tensor(0.9141, device='cuda:0')
+Epoch 88 Average loss 3.047122227776911 Time taken per epoch 31.951630353927612
+Accuracy tensor(0.9141, device='cuda:0')
+Epoch 89 Average loss 3.0466687900503886 Time taken per epoch 31.58264446258545
+Accuracy tensor(0.8789, device='cuda:0')
+(capstone_2023) [cchou@workergpu089 code]$ 
+
+
+
+
+
+
+
+
+
+
+Child 0 Sequential(
+  (0): Conv2d(3, 64, kernel_size=(11, 11), stride=(2, 2), padding=(5, 5))
+  (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (2): ReLU()
+  (3): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=False)
+)
+Child 1 Sequential(
+  (0): Conv2d(64, 128, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3))
+  (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (2): ReLU()
+  (3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+)
+Child 2 Sequential(
+  (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (2): ReLU()
+  (3): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+)
+Child 3 Sequential(
+  (0): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1))
+  (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+)
+Child 4 Sequential(
+  (0): Linear(in_features=12800, out_features=512, bias=True)
+  (1): ReLU()
+  (2): Linear(in_features=512, out_features=50, bias=True)
+)
+Child 5 Softmax(dim=-1)

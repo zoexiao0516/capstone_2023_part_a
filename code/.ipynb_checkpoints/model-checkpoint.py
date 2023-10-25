@@ -119,7 +119,6 @@ if __name__ == '__main__':
         start_time = time.time()
         for imgs, classes in dataloader:
             imgs, classes = imgs.to(device), classes.to(device)
-            
 
             output = alexnet(imgs)
             loss = criterion(output, classes)
