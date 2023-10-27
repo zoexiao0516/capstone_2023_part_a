@@ -1,15 +1,15 @@
 import os
-import shutil
 import torch
 import torch.nn as nn
-import torchvision.transforms as transforms
+from torchvision import transforms
 from torchvision.datasets import ImageFolder
-from torch.utils.data import DataLoader
 
 
 # Set the paths
 save_path = '/mnt/home/cchou/ceph/Data/imagenet_subset_50_50/'
-image_path = '/mnt/home/cchou/ceph/Data/imagenet_subset_50_50/'
+# Ensure the save_path exists
+os.makedirs(save_path, exist_ok=True)
+image_path = '/mnt/home/cchou/ceph/Data/imagenet_subset_50_500/'
 models_path = '/mnt/home/cchou/ceph/Capstone/models/'
 IMAGE_DIM = 227
 epoch = 90
@@ -47,6 +47,17 @@ class Net(nn.Module):
         )
         self.softmax_final = nn.Softmax(dim=-1)
 
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.conv2(x)
+        x = self.conv3(x)
+        x = self.conv4(x)
+        
+        x = x.view(x.shape[0], -1)
+        # print("Flattented shape", x.shape)
+        x = self.classifier(x)
+        x = self.softmax_final(x)
+        return x
 
 with open(models_path+f'alexnet_states_e{epoch}.pkl', 'rb') as file:
     model = Net()
@@ -65,34 +76,45 @@ data_transform = transforms.Compose([
 # Create a dataset from your directory structure
 dataset = ImageFolder(root=image_path, transform=data_transform)
 
-# Create a DataLoader to iterate through the dataset
-dataloader = DataLoader(dataset, batch_size=1, shuffle=False)  # Set batch_size to 1 for one image at a time
+# Define a function to save correctly labeled images
+def save_correctly_labeled_images(dataset, model, save_path):
+    model.eval()
+    transform = transforms.Compose([
+        transforms.CenterCrop(IMAGE_DIM),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    ])
 
-model.eval()  # Set the model to evaluation mode
-
-for class_idx in range(len(dataset.classes)):
-    class_name = dataset.classes[class_idx]
-
-    # Create a directory for each class in the output directory
-    class_output_dir = os.path.join(save_path, class_name)
-    os.makedirs(class_output_dir, exist_ok=True)
-
-    class_images = []
-
-    for image, label in dataloader:
-        output = model(image)
-        _, predicted_class = output.max(1)
-
-        if predicted_class.item() == label.item():
-            class_images.append((dataset.samples[dataloader.batch_sampler.sampler.data_source.data[label.item()]], output[0, label.item()].item()))
-
-    # Sort the images by prediction confidence
-    class_images.sort(key=lambda x: x[1], reverse=True)
-
-    # Save the top 50 correctly classified images for this class
-    for i, (image_path, confidence) in enumerate(class_images[:50], start=1):
-        image_filename = os.path.basename(image_path[0])
-        output_path = os.path.join(class_output_dir, f"top_{i}_{confidence:.4f}_{image_filename}")
-        shutil.copy(image_path[0], output_path)
-
+    with torch.no_grad():
+        for class_idx, class_name in enumerate(dataset.classes):
+            # Create a subdirectory for the class in the save_path
+            class_save_dir = os.path.join(save_path, class_name)
+            os.makedirs(class_save_dir, exist_ok=True)
             
+            correct_count = 0
+            total_count = 0
+
+            for i in range(len(dataset.targets)):
+                if dataset.targets[i] == class_idx:
+                    image, target = dataset[i]
+                    image = transform(image)
+                    image = image.unsqueeze(0)  # Add batch dimension
+                    output = model(image)
+                    prediction = output.argmax(dim=1)
+
+                    if prediction == target:
+                        # Save the correctly classified image
+                        image = transforms.ToPILImage()(image.squeeze(0))
+                        image_path = os.path.join(class_save_dir, f"image_{correct_count}.jpg")
+                        image.save(image_path)
+
+                        correct_count += 1
+                        if correct_count == 50:  # Save 50 images for each class
+                            break
+
+                    total_count += 1
+                    if total_count == 500:  # Limit the number of images to 500 per class
+                        break
+
+# Call the function to save correctly labeled images
+save_correctly_labeled_images(dataset, model, save_path)
