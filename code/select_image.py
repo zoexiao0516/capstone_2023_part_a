@@ -5,6 +5,10 @@ from torchvision import transforms
 from torchvision.datasets import ImageFolder
 
 
+torch.cuda.empty_cache()
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(device)
+
 # Set the paths
 save_path = '/mnt/home/cchou/ceph/Data/imagenet_subset_50_50/'
 # Ensure the save_path exists
@@ -45,7 +49,7 @@ class Net(nn.Module):
             nn.ReLU(),
             nn.Linear(in_features=512, out_features=num_classes),
         )
-        self.softmax_final = nn.Softmax(dim=-1)
+        # self.softmax_final = nn.Softmax(dim=-1)
 
     def forward(self, x):
         x = self.conv1(x)
@@ -56,33 +60,25 @@ class Net(nn.Module):
         x = x.view(x.shape[0], -1)
         # print("Flattented shape", x.shape)
         x = self.classifier(x)
-        x = self.softmax_final(x)
+        # x = self.softmax_final(x)
         return x
 
-with open(models_path+f'alexnet_states_e{epoch}.pkl', 'rb') as file:
+with open(models_path+f'model_states_e{epoch}.pkl', 'rb') as file:
     model = Net()
     model_loaded = torch.load(file)
-    state_dict = model_loaded['model'] # skip this for '/models/models_150_b512' case
-    model.load_state_dict(state_dict)
+    # state_dict = model_loaded['model']
+    model.load_state_dict(model_loaded)
 
-
-# Define the data transformations, including resizing
-data_transform = transforms.Compose([
-    transforms.Resize((299, 299)),  # Resize the images to a specific size
-    transforms.ToTensor(),  # Convert to PyTorch tensor
-    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])  # Normalize
-])
 
 # Create a dataset from your directory structure
-dataset = ImageFolder(root=image_path, transform=data_transform)
+dataset = ImageFolder(root=image_path)
 
 # Define a function to save correctly labeled images
 def save_correctly_labeled_images(dataset, model, save_path):
     model.eval()
     transform = transforms.Compose([
         transforms.CenterCrop(IMAGE_DIM),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        transforms.ToTensor()
     ])
 
     with torch.no_grad():

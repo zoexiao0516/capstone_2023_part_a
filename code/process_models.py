@@ -33,34 +33,51 @@ class Net(nn.Module):
             nn.ReLU(),
             nn.Linear(in_features=512, out_features=num_classes),
         )
-        self.softmax_final = nn.Softmax(dim=-1)
+        # self.softmax_final = nn.Softmax(dim=-1)
+        
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.conv2(x)
+        x = self.conv3(x)
+        x = self.conv4(x)
+        
+        x = x.view(x.shape[0], -1)
+        # print("Flattented shape", x.shape)
+        x = self.classifier(x)
+        # x = self.softmax_final(x)
+        return x
 
-all_epochs_data = {}
+transform = transforms.Compose([
+        transforms.ToTensor()
+    ])
 
 epoch = 42
-image_path = '/mnt/home/cchou/ceph/Data/imagenet_subset_50_500/n021076'
-input_image =  # dimension should be 227
+
+image_path = '/mnt/home/cchou/ceph/Data/imagenet_subset_50_500'
+dataset = ImageFolder(root=image_path)
+
 models_path = '/mnt/home/cchou/ceph/Capstone/models/'
 with open(models_path+f'alexnet_states_e{epoch}.pkl', 'rb') as file:
     model = Net()
     model_loaded = torch.load(file)
     state_dict = model_loaded['model'] #skip this for '/models/models_150_b512' case
-    model.load_state_dict(state_dict)
+    model.load_state_dict(state_dict)    
 
-children_list = list(model.children())
-current_epoch = []
-for i in range(len(children_list)):
-    print("Layer", i)
-    clipped = nn.Sequential(*children_list[:i])
-    intermediate_output = clipped(input_image)
-    intermediate_output = intermediate_output.view(-1)
-    #calculate radius and dimension of intermediate_output and add to you list/dicts
-    # current_radius, current_dimension = #
+layers_list = list(model.children())
+
+for layer in range(len(layers_list)):
+    print("Layer:", layer)
+    clipped_model = nn.Sequential(*children_list[:i])
+    for image, target in range(dataset):
+        image = transform(image)
+        image = image.unsqueeze(0)
+        output = clipped_model(image)
+        intermediate_output = intermediate_output.view(-1)
+
     current_epoch.append((current_radius, current_dimension))
 
-all_epochs_data[epoch] = current_epoch
 
-#get the image in the relevant shape here
-# output = model(input_image)
+#X should be a list of numpy arrays and each array will be (N * 500) projected on (3000 * 500)
+epoch_layer_data = {'epoch':epoch, 'layer':layer, 'class': , X}
 
 

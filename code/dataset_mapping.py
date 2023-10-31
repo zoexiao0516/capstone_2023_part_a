@@ -3,8 +3,7 @@ import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 
 
-
-TRAIN_IMG_DIR = ''
+TRAIN_IMG_DIR = '/mnt/home/cchou/ceph/Data/imagenet_subset_50_500'
 IMAGE_DIM = 227
 
 
