@@ -6,21 +6,18 @@ import torch.nn.functional as F
 from torch.utils import data
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
-from tensorboardX import SummaryWriter
 import time
 import gc
-
 
 torch.cuda.empty_cache()
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(device)
 
-NUM_EPOCHS = 150
+NUM_EPOCHS = 90
 BATCH_SIZE = 512
 
 IMAGE_DIM = 227
 NUM_CLASSES = 50
-
 
 INPUT_ROOT_DIR = '/mnt/home/cchou/ceph/Data/imagenet_subset_50_500'
 TRAIN_IMG_DIR = '/mnt/home/cchou/ceph/Data/imagenet_subset_50_500'
@@ -34,25 +31,23 @@ class AlexNet(nn.Module):
         # Conv layers
         super().__init__()
         self.conv1 = nn.Sequential(
-                        nn.Conv2d(3, 64, kernel_size = 11, stride = 2, padding = 5),
-                        nn.BatchNorm2d(64),
-                        nn.ReLU(), nn.MaxPool2d(kernel_size = 3, stride = 2))
- 
-        self.conv2 = nn.Sequential(
-                        nn.Conv2d(64, 128, kernel_size = 7, stride = 2, padding = 3),
-                        nn.BatchNorm2d(128),
-                        nn.ReLU(), nn.MaxPool2d(kernel_size = 2))
-        
-        self.conv3 = nn.Sequential(
-                        nn.Conv2d(128, 256, kernel_size = 3, padding = 1),
-                        nn.BatchNorm2d(256),
-                        nn.ReLU(), nn.MaxPool2d(kernel_size = 2))
+            nn.Conv2d(3, 64, kernel_size=11, stride=2, padding=5),
+            nn.BatchNorm2d(64),
+            nn.ReLU(), nn.MaxPool2d(kernel_size=3, stride=2))
 
-        
+        self.conv2 = nn.Sequential(
+            nn.Conv2d(64, 128, kernel_size=7, stride=2, padding=3),
+            nn.BatchNorm2d(128),
+            nn.ReLU(), nn.MaxPool2d(kernel_size=2))
+
+        self.conv3 = nn.Sequential(
+            nn.Conv2d(128, 256, kernel_size=3, padding=1),
+            nn.BatchNorm2d(256),
+            nn.ReLU(), nn.MaxPool2d(kernel_size=2))
+
         self.conv4 = nn.Sequential(
-                        nn.Conv2d(256, 512, kernel_size = 3),
-                        nn.BatchNorm2d(512))
-        
+            nn.Conv2d(256, 512, kernel_size=3),
+            nn.BatchNorm2d(512))
 
         # Fully connected layers
         self.classifier = nn.Sequential(
@@ -60,18 +55,17 @@ class AlexNet(nn.Module):
             nn.ReLU(),
             nn.Linear(in_features=512, out_features=num_classes),
         )
-        self.softmax_final = nn.Softmax(dim=-1)
+        # self.softmax_final = nn.Softmax(dim=-1)
 
     def forward(self, x):
         x = self.conv1(x)
         x = self.conv2(x)
         x = self.conv3(x)
         x = self.conv4(x)
-        
         x = x.view(x.shape[0], -1)
         # print("Flattented shape", x.shape)
         x = self.classifier(x)
-        x = self.softmax_final(x)
+        # x = self.softmax_final(x)
         return x
 
 def clear_gpu_memory():
@@ -104,9 +98,9 @@ if __name__ == '__main__':
         batch_size=BATCH_SIZE)
     print('Dataloader created')
 
-    optimizer = optim.Adam(params=alexnet.parameters(), lr=0.0001)
+    optimizer = optim.Adam(params=alexnet.parameters(), lr=0.001)
     print('Optimizer created')
-    
+
     criterion = nn.CrossEntropyLoss()
 
     # lr_scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=30, gamma=0.1)
@@ -119,7 +113,6 @@ if __name__ == '__main__':
         start_time = time.time()
         for imgs, classes in dataloader:
             imgs, classes = imgs.to(device), classes.to(device)
-            
 
             output = alexnet(imgs)
             loss = criterion(output, classes)
@@ -129,21 +122,17 @@ if __name__ == '__main__':
             loss.backward()
             optimizer.step()
             # lr_scheduler.step()
-            
+
             total_loss += loss.item()
         end_time = time.time()
-        print("Epoch", epoch, "Average loss", total_loss/len(dataloader), "Time taken per epoch", end_time-start_time)
-        _, preds = torch.max(output, 1)
-        accuracy = torch.sum(preds == classes)/BATCH_SIZE
-        print("Accuracy", accuracy)
 
-        # save checkpoints
-        checkpoint_path = os.path.join(CHECKPOINT_DIR, 'model_states_e{}.pkl'.format(epoch + 1))
-        # state = {
-        #     'epoch': epoch,
-        #     'total_steps': total_steps,
-        #     'optimizer': optimizer.state_dict(),
-        #     'model': alexnet.state_dict(),
-        #     'seed': seed,
-        # }
-        torch.save(alexnet.state_dict(), checkpoint_path)
+        with torch.no_grad():
+            print("Epoch", epoch, "Average loss", total_loss / len(dataloader), "Time taken per epoch",
+                  end_time - start_time)
+            _, preds = torch.max(F.softmax(output, dim=-1), 1)
+            accuracy = torch.sum(preds == classes) / BATCH_SIZE
+            print("Accuracy", accuracy)
+
+            # save checkpoints
+            checkpoint_path = os.path.join(CHECKPOINT_DIR, 'model_states_e{}.pkl'.format(epoch + 1))
+            torch.save(alexnet.state_dict(), checkpoint_path)
