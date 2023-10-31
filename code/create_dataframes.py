@@ -95,5 +95,3 @@ for layer in range(len(layers_list)):
 df = pd.DataFrame.from_records(rows)
 print(df.head(5))
 df.to_csv(OUT_DIR+str(epoch))
-
-
